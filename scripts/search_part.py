@@ -91,4 +91,7 @@ if not BENCH_MODE:
         print("%30s %010f at %08d" % (res[2], res[0], res[1]))
 else:
     ids = [re.search(r"[EJ](0[1-9]|[1-3][0-9]|4[0-4])", res[2]).group(0) for res in result_corr_max[0:N_SHOW]]
-    print(" ".join(ids))
+    f = open("result.txt","w")
+    for i in ids:
+      f.write(str(i)+"\n")
+    f.close()

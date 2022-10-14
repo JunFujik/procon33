@@ -92,6 +92,7 @@ if not BENCH_MODE:
 else:
     ids = [re.search(r"[EJ](0[1-9]|[1-3][0-9]|4[0-4])", res[2]).group(0) for res in result_corr_max[0:N_SHOW]]
     f = open("result.txt","w")
-    for i in ids:
-      f.write(str(i)+"\n")
-    f.close()
+    print(*ids)
+    #for i in ids:
+    #  f.write(str(i)+"\n")
+    #f.close()

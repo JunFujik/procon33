@@ -1,5 +1,6 @@
-﻿#マルチチャンネル時変ガウスモデル
+#マルチチャンネル時変ガウスモデル
 
+import os
 import wave as wave
 import pyroomacoustics as pa
 import numpy as np
@@ -203,11 +204,18 @@ def calculate_snr(desired,out):
 #乱数の種を初期化
 np.random.seed(0)
 
-a = input("問題か音源分離した音声ファイルのpath:")
-b = input("もう一つの方のpath:")
+path="./que"
+a=os.listdir(path)
+
+path='./model'
+b = os.listdir(path)
+
+q="./que/"+a[0]
+m="./model/"+b[0]
+
 
 #畳み込みに用いる音声波形
-clean_wave_files=[a, b]
+clean_wave_files=[q, m]
 
 #音源数
 n_sources=len(clean_wave_files)
@@ -336,27 +344,13 @@ multi_conv_data=room.mic_array.signals
 multi_conv_data_left_no_noise=room_no_noise_left.mic_array.signals
 multi_conv_data_right_no_noise=room_no_noise_right.mic_array.signals
 
-#畳み込んだ波形をファイルに書き込む
-write_file_from_time_signal(multi_conv_data_left_no_noise[0,:]*np.iinfo(np.int16).max/20.,"./ica_left_clean.wav",sample_rate)
-
-#畳み込んだ波形をファイルに書き込む
-write_file_from_time_signal(multi_conv_data_right_no_noise[0,:]*np.iinfo(np.int16).max/20.,"./ica_right_clean.wav",sample_rate)
-
-#畳み込んだ波形をファイルに書き込む
-write_file_from_time_signal(multi_conv_data[0,:]*np.iinfo(np.int16).max/20.,"./ica_in_left.wav",sample_rate)
-write_file_from_time_signal(multi_conv_data[0,:]*np.iinfo(np.int16).max/20.,"./ica_in_right.wav",sample_rate)
-
 #短時間フーリエ変換を行う
 f,t,stft_data=sp.stft(multi_conv_data,fs=sample_rate,window="hann",nperseg=N)
 
 #ICAの繰り返し回数
 n_ica_iterations=50
 
-#ILRMAの基底数
-n_basis=2
 
-#処理するフレーm数
-Lt=np.shape(stft_data)[-1]
 
 
 #EMアルゴリズムに基づくLGM実行コード
@@ -365,8 +359,6 @@ permutation_index_result=solver_inter_frequency_permutation(y_lgm_em[0,...])
 #パーミュテーションを解く
 for k in range(Nk):
     y_lgm_em[:,:,k,:]=y_lgm_em[:,permutation_index_result[k],k,:]
-
-lgm_em_time=time.time()
 
 t,y_lgm_em=sp.istft(y_lgm_em[0,...],fs=sample_rate,window="hann",nperseg=N)
 
@@ -381,10 +373,10 @@ snr_lgm_em_post=np.maximum(snr_lgm_em_post1,snr_lgm_em_post2)
 snr_lgm_em_post/=2.
 
 
-write_file_from_time_signal(y_lgm_em[0,...]*np.iinfo(np.int16).max/20.,"./lgm_em_1.wav",sample_rate)
-write_file_from_time_signal(y_lgm_em[1,...]*np.iinfo(np.int16).max/20.,"./lgm_em_2.wav",sample_rate)
+write_file_from_time_signal(y_lgm_em[0,...]*np.iinfo(np.int16).max/20.,"./resalt/lgm_me_solve.wav",sample_rate)
+write_file_from_time_signal(y_lgm_em[1,...]*np.iinfo(np.int16).max/20.,"./resalt/lgm_me_trash.wav",sample_rate)
 
 
-
+print("end")
 
 

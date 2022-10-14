@@ -43,9 +43,13 @@ def calc_correlation(wav_data, chunk_path, is_flatten, chunk_size, shift_length=
     for chunk_start in range(0, test_data.shape[0] - chunk_size + 1, shift_length):
         test_data_chunk = test_data[chunk_start:chunk_start+chunk_size]
         corr = sp.correlate(test_data_chunk, wav_data, mode="valid")
-        correlate_max.append(corr.max())
+        correlate_max.append({
+            "value": corr.max(),
+            "yomipos": chunk_start,
+            "targetpos": corr.argmax()
+        })
     
-    return np.array([ max(correlate_max) ])
+    return max(correlate_max, key=lambda x: x["value"])
 
 def main():
     parser = argparse.ArgumentParser()
@@ -110,8 +114,13 @@ def main():
         corr = future.result()
         
         if not BENCH_MODE:
-            print("%30s %010f at %08d" % (str(path), corr.max(), corr.argmax()))
-        result_corr_max.append([corr.max(), corr.argmax(), str(path)])
+            print("%30s %010f at (chunk:%08d, target:%08d)" % (path, corr["value"], corr["yomipos"], corr["targetpos"]))
+        result_corr_max.append({
+            "value": corr["value"],
+            "yomipos": corr["yomipos"],
+            "targetpos": corr["targetpos"],
+            "path": path
+        })
         
         #showlist = ["J01", "E02", "J03", "E04", "J05"]
         #for id in showlist:
@@ -120,12 +129,12 @@ def main():
         #            plt.title("Correlation of " + str(wavpath))
         #            plt.show()
         
-    result_corr_max.sort(reverse=True, key=lambda v: v[0])
+    result_corr_max.sort(reverse=True, key=lambda v: v["value"])
 
     if not BENCH_MODE:
         print("\nResult")
         for res in result_corr_max[0:N_SHOW]:
-            print("%30s %010f at %08d" % (res[2], res[0], res[1]))
+            print("%30s %010f at (chunk:%08d, target:%08d)" % (res["path"], res["value"], res["yomipos"], res["targetpos"]))
     else:
         ids = [re.search(r"[EJ](0[1-9]|[1-3][0-9]|4[0-4])", res[2]).group(0) for res in result_corr_max[0:N_SHOW]]
         print(" ".join(ids))

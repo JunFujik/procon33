@@ -436,5 +436,19 @@ namespace procon33_gui.Forms
                 }
             }
         }
+
+        private void TestButton_Click(object sender, EventArgs e)
+        {
+            var result = procon.Test();
+
+            if(result == ProconError.Success)
+            {
+                MessageBox.Show("成功");
+            }
+            else
+            {
+                MessageBox.Show("失敗");
+            }
+        }
     }
 }

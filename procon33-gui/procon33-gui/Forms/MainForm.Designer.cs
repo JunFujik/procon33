@@ -49,6 +49,7 @@
             this.FlattenCorrelateButton = new System.Windows.Forms.Button();
             this.TimerLabel = new System.Windows.Forms.Label();
             this.PlayDataButton = new System.Windows.Forms.Button();
+            this.TestButton = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PostAnswerEhuda)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreAnswerEhuda)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -262,11 +263,22 @@
             this.PlayDataButton.UseVisualStyleBackColor = true;
             this.PlayDataButton.Click += new System.EventHandler(this.PlayDataButton_Click);
             // 
+            // TestButton
+            // 
+            this.TestButton.Location = new System.Drawing.Point(302, 8);
+            this.TestButton.Name = "TestButton";
+            this.TestButton.Size = new System.Drawing.Size(281, 34);
+            this.TestButton.TabIndex = 19;
+            this.TestButton.Text = "疎通確認";
+            this.TestButton.UseVisualStyleBackColor = true;
+            this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 753);
+            this.Controls.Add(this.TestButton);
             this.Controls.Add(this.PlayDataButton);
             this.Controls.Add(this.TimerLabel);
             this.Controls.Add(this.FlattenCorrelateButton);
@@ -324,6 +336,7 @@
         private System.Windows.Forms.Label MatchInfoLabel;
         private System.Windows.Forms.Label TimerLabel;
         private System.Windows.Forms.Button PlayDataButton;
+        private System.Windows.Forms.Button TestButton;
     }
 }
 

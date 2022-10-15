@@ -98,7 +98,7 @@ namespace procon33_gui.Procon
             outProblemInfo = new ProblemInfo(
                 response["id"],
                 int.Parse(response["chunks"]),
-                DateTimeOffset.FromUnixTimeSeconds(long.Parse(response["starts_at"])).LocalDateTime,
+                DateTimeOffset.FromUnixTimeSeconds(long.Parse(response["start_at"])).LocalDateTime,
                 int.Parse(response["time_limit"]),
                 int.Parse(response["data"]));
             return ProconError.Success;
@@ -244,11 +244,39 @@ namespace procon33_gui.Procon
             return ProconError.Error;
         }
 
+        internal ProconError Test()
+        {
+            Process p = new Process()
+            {
+                StartInfo =
+                {
+                    FileName = m_pythonCommand,
+                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {HttpsSchemedRootURL} test",
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true
+                }
+            };
+            p.Start();
+
+            string output = p.StandardOutput.ReadToEnd();
+            var match = Regex.Matches(output, "(?<key>.+?)=(?<value>.+?)[;$\r\n]");
+            Dictionary<string, string> response = match.Cast<Match>().ToDictionary(m => m.Groups["key"].Value, m => m.Groups["value"].Value);
+
+            string result = response["result"];
+            if (!result.Equals("success"))
+            {
+                return ResultToError(result);
+            }
+
+            return ProconError.Success;
+            
+        }
+
         private string HttpsSchemedRootURL
         {
             get
             {
-                return $"https://{m_host}/";
+                return $"http://{m_host}/";
             }
         }
     }

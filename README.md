@@ -17,7 +17,9 @@ search_part.pyを実行して結果をresult.pyに入れるスクリプト
 高専プロコンのシステムと通信する用のスクリプト
 GUIから呼び出しています。
 ### collect.py
-result.txtの結果を集計するスクリプト
+result.txtの結果を集計し、画像を描画するスクリプト
+![sin](https://user-images.githubusercontent.com/84483903/196017454-fdedf1b6-9f02-4b1d-a35c-2dbe3363d52d.png)
+
 ### search_part.py
 相関関係を調べるスクリプト
 ### search_part_split.py

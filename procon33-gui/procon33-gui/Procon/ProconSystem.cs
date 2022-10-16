@@ -20,6 +20,7 @@ namespace procon33_gui.Procon
         string m_scriptPath;
         string m_pythonCommand;
         string m_pythonArg;
+        bool m_useHttps;
 
         internal ProconSystem(string host, string token, string script)
         {
@@ -35,6 +36,7 @@ namespace procon33_gui.Procon
             m_scriptPath = Path.Combine(config.ScriptsPath, ProconScriptFileName);
             m_pythonCommand = config.PythonCommand;
             m_pythonArg = config.PythonArgument;
+            m_useHttps = config.UseHttps;
         }
 
         internal ProconError TryGetMatch(out MatchInfo outMatchInfo)
@@ -44,7 +46,7 @@ namespace procon33_gui.Procon
                 StartInfo =
                 {
                     FileName = m_pythonCommand,
-                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {HttpsSchemedRootURL} match",
+                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {RootURL} match",
                     UseShellExecute = false,
                     RedirectStandardOutput = true
                 }
@@ -64,9 +66,11 @@ namespace procon33_gui.Procon
 
             int problems = int.Parse(response["problems"]);
             decimal[] bonus_factor = ParseArray<decimal>(response["bonus_factor"]);
-            int penalty = int.Parse(response["penalty"]);
+            decimal changePenalty = decimal.Parse(response["change_penalty"]);
+            decimal wrongPenalty = decimal.Parse(response["wrong_penalty"]);
+            decimal correctPenalty = decimal.Parse(response["correct_point"]);
 
-            outMatchInfo =  new MatchInfo(problems, bonus_factor, penalty);
+            outMatchInfo =  new MatchInfo(problems, bonus_factor, changePenalty, wrongPenalty, correctPenalty);
             return ProconError.Success;
         }
 
@@ -77,7 +81,7 @@ namespace procon33_gui.Procon
                 StartInfo =
                 {
                     FileName = m_pythonCommand,
-                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {HttpsSchemedRootURL} problem",
+                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {RootURL} problem",
                     UseShellExecute = false,
                     RedirectStandardOutput = true
                 }
@@ -114,7 +118,7 @@ namespace procon33_gui.Procon
                 StartInfo =
                 {
                     FileName = m_pythonCommand,
-                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {HttpsSchemedRootURL} --data {answerData} --problem {problem.ProblemId} answer",
+                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {RootURL} --data {answerData} --problem {problem.ProblemId} answer",
                     UseShellExecute = false,
                     RedirectStandardOutput = true
                 }
@@ -147,7 +151,7 @@ namespace procon33_gui.Procon
                 StartInfo =
                 {
                     FileName = m_pythonCommand,
-                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {HttpsSchemedRootURL} --num {numChunks} chunk",
+                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {RootURL} --num {numChunks} chunk",
                     UseShellExecute = false,
                     RedirectStandardOutput = true
                 }
@@ -182,7 +186,7 @@ namespace procon33_gui.Procon
                     StartInfo =
                     {
                         FileName = m_pythonCommand,
-                        Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {HttpsSchemedRootURL} --filename {chunkname} get",
+                        Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {RootURL} --filename {chunkname} get",
                         UseShellExecute = false,
                         RedirectStandardOutput = true
                     }
@@ -251,7 +255,7 @@ namespace procon33_gui.Procon
                 StartInfo =
                 {
                     FileName = m_pythonCommand,
-                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {HttpsSchemedRootURL} test",
+                    Arguments = $"{m_pythonArg} {m_scriptPath} --token {m_token} --host {RootURL} test",
                     UseShellExecute = false,
                     RedirectStandardOutput = true
                 }
@@ -272,11 +276,11 @@ namespace procon33_gui.Procon
             
         }
 
-        private string HttpsSchemedRootURL
+        private string RootURL
         {
             get
             {
-                return $"http://{m_host}/";
+                return m_useHttps ? $"https://{m_host}/" : $"http://{m_host}/";
             }
         }
     }

@@ -32,6 +32,7 @@ namespace procon33_gui
             PythonCommand = loadedConfig.PythonCommand;
             PythonArgument = loadedConfig.PythonArgument;
             JkspeechPath = loadedConfig.JkspeechPath;
+            UseHttps = loadedConfig.UseHttps;
         }
 
         public string ProconHost
@@ -65,6 +66,12 @@ namespace procon33_gui
         }
 
         public string JkspeechPath
+        {
+            get;
+            set;
+        }
+
+        public bool UseHttps
         {
             get;
             set;

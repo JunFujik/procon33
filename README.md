@@ -1,7 +1,5 @@
 # procon33
 ## それぞれのファイルについて
-## isolation
-マルチチャンネル時変ガウスモデルを用いて音源分離をするプログラム
 ## procon33_gui
 C#にて書かれたプロコン用のGUIツール
 ## scripts
@@ -15,7 +13,8 @@ C#にて書かれたプロコン用のGUIツール
 音源データがなければダウンロードをして、num変数の数字の数分の音声データをmakequal.py使って合成するスクリプト
 ### test_case.py
 search_part.pyを実行して結果をall_result.pyに入れるスクリプト
-### test.sh
-setup.pyとtest_case.pyを指定の回数繰り返すスクリプト
+## 問題を解くためのスクリプト
+###isolation
+音声を分離するスクリプト
 ### collect.py
 all_resultの結果を集計するスクリプト

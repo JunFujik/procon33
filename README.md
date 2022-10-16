@@ -22,5 +22,8 @@ result.txtの結果を集計するスクリプト
 相関関係を調べるスクリプト
 ### search_part_split.py
 始める位置や読みデータから切り取るサンプル数などのパラメータを変えながら相互相関関数の値を調べるスクリプト
+### final_search_part_split.py
+search_part_split.pyの出力結果を変えたスクリプト
 ### chain_wave.py
 番号が連続したデータをつなげるスクリプト
+

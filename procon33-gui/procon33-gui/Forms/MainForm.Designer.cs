@@ -31,11 +31,7 @@
             this.MatchInfoButton = new System.Windows.Forms.Button();
             this.ProblemInfoButton = new System.Windows.Forms.Button();
             this.ConfigButton = new System.Windows.Forms.Button();
-            this.PostAnswerEhuda = new System.Windows.Forms.DataGridView();
             this.AnswerButton = new System.Windows.Forms.Button();
-            this.PreAnswerEhuda = new System.Windows.Forms.DataGridView();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.ProblemInfoLabel = new System.Windows.Forms.Label();
             this.MatchInfoLabel = new System.Windows.Forms.Label();
@@ -47,14 +43,14 @@
             this.SoundSeparateButton = new System.Windows.Forms.Button();
             this.CorrelateButton = new System.Windows.Forms.Button();
             this.FlattenCorrelateButton = new System.Windows.Forms.Button();
-            this.TimerLabel = new System.Windows.Forms.Label();
             this.PlayDataButton = new System.Windows.Forms.Button();
             this.TestButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.PostAnswerEhuda)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PreAnswerEhuda)).BeginInit();
+            this.PreAnswerEhuda = new System.Windows.Forms.DataGridView();
+            this.RemainingTimeLabel = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumChunkNumericBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChunkDataGridView)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PreAnswerEhuda)).BeginInit();
             this.SuspendLayout();
             // 
             // MatchInfoButton
@@ -87,54 +83,15 @@
             this.ConfigButton.UseVisualStyleBackColor = true;
             this.ConfigButton.Click += new System.EventHandler(this.ConfigButton_Click);
             // 
-            // PostAnswerEhuda
-            // 
-            this.PostAnswerEhuda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PostAnswerEhuda.Location = new System.Drawing.Point(12, 367);
-            this.PostAnswerEhuda.Name = "PostAnswerEhuda";
-            this.PostAnswerEhuda.RowHeadersWidth = 51;
-            this.PostAnswerEhuda.RowTemplate.Height = 24;
-            this.PostAnswerEhuda.Size = new System.Drawing.Size(281, 320);
-            this.PostAnswerEhuda.TabIndex = 3;
-            // 
             // AnswerButton
             // 
-            this.AnswerButton.Location = new System.Drawing.Point(299, 693);
+            this.AnswerButton.Location = new System.Drawing.Point(12, 693);
             this.AnswerButton.Name = "AnswerButton";
-            this.AnswerButton.Size = new System.Drawing.Size(281, 48);
+            this.AnswerButton.Size = new System.Drawing.Size(568, 48);
             this.AnswerButton.TabIndex = 4;
             this.AnswerButton.Text = "選択した絵札で解答";
             this.AnswerButton.UseVisualStyleBackColor = true;
             this.AnswerButton.Click += new System.EventHandler(this.AnswerButton_Click);
-            // 
-            // PreAnswerEhuda
-            // 
-            this.PreAnswerEhuda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.PreAnswerEhuda.Location = new System.Drawing.Point(299, 367);
-            this.PreAnswerEhuda.Name = "PreAnswerEhuda";
-            this.PreAnswerEhuda.ReadOnly = true;
-            this.PreAnswerEhuda.RowHeadersWidth = 51;
-            this.PreAnswerEhuda.RowTemplate.Height = 24;
-            this.PreAnswerEhuda.Size = new System.Drawing.Size(281, 320);
-            this.PreAnswerEhuda.TabIndex = 5;
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(12, 349);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(125, 15);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "解答されている絵札";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(299, 349);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(146, 15);
-            this.label2.TabIndex = 7;
-            this.label2.Text = "これから解答される絵札";
             // 
             // groupBox1
             // 
@@ -168,7 +125,7 @@
             // 
             // NumChunkNumericBox
             // 
-            this.NumChunkNumericBox.Location = new System.Drawing.Point(1061, 20);
+            this.NumChunkNumericBox.Location = new System.Drawing.Point(1257, 19);
             this.NumChunkNumericBox.Name = "NumChunkNumericBox";
             this.NumChunkNumericBox.Size = new System.Drawing.Size(110, 22);
             this.NumChunkNumericBox.TabIndex = 9;
@@ -176,7 +133,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(890, 22);
+            this.label3.Location = new System.Drawing.Point(1086, 21);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(140, 15);
             this.label3.TabIndex = 10;
@@ -184,7 +141,7 @@
             // 
             // GetChunkButton
             // 
-            this.GetChunkButton.Location = new System.Drawing.Point(890, 48);
+            this.GetChunkButton.Location = new System.Drawing.Point(1086, 47);
             this.GetChunkButton.Name = "GetChunkButton";
             this.GetChunkButton.Size = new System.Drawing.Size(281, 34);
             this.GetChunkButton.TabIndex = 11;
@@ -209,14 +166,14 @@
             this.ChunkDataGridView.Name = "ChunkDataGridView";
             this.ChunkDataGridView.RowHeadersWidth = 51;
             this.ChunkDataGridView.RowTemplate.Height = 24;
-            this.ChunkDataGridView.Size = new System.Drawing.Size(281, 643);
+            this.ChunkDataGridView.Size = new System.Drawing.Size(475, 643);
             this.ChunkDataGridView.TabIndex = 12;
             this.ChunkDataGridView.DragDrop += new System.Windows.Forms.DragEventHandler(this.ChunkDataGridView_DragDrop);
             this.ChunkDataGridView.DragEnter += new System.Windows.Forms.DragEventHandler(this.ChunkDataGridView_DragEnter);
             // 
             // SoundSeparateButton
             // 
-            this.SoundSeparateButton.Location = new System.Drawing.Point(890, 108);
+            this.SoundSeparateButton.Location = new System.Drawing.Point(1086, 107);
             this.SoundSeparateButton.Name = "SoundSeparateButton";
             this.SoundSeparateButton.Size = new System.Drawing.Size(281, 34);
             this.SoundSeparateButton.TabIndex = 14;
@@ -226,7 +183,7 @@
             // 
             // CorrelateButton
             // 
-            this.CorrelateButton.Location = new System.Drawing.Point(890, 148);
+            this.CorrelateButton.Location = new System.Drawing.Point(1086, 147);
             this.CorrelateButton.Name = "CorrelateButton";
             this.CorrelateButton.Size = new System.Drawing.Size(281, 34);
             this.CorrelateButton.TabIndex = 15;
@@ -236,7 +193,7 @@
             // 
             // FlattenCorrelateButton
             // 
-            this.FlattenCorrelateButton.Location = new System.Drawing.Point(890, 188);
+            this.FlattenCorrelateButton.Location = new System.Drawing.Point(1086, 187);
             this.FlattenCorrelateButton.Name = "FlattenCorrelateButton";
             this.FlattenCorrelateButton.Size = new System.Drawing.Size(281, 34);
             this.FlattenCorrelateButton.TabIndex = 16;
@@ -244,18 +201,9 @@
             this.FlattenCorrelateButton.UseVisualStyleBackColor = true;
             this.FlattenCorrelateButton.Click += new System.EventHandler(this.FlattenCorrelateButton_Click);
             // 
-            // TimerLabel
-            // 
-            this.TimerLabel.AutoSize = true;
-            this.TimerLabel.Location = new System.Drawing.Point(299, 111);
-            this.TimerLabel.Name = "TimerLabel";
-            this.TimerLabel.Size = new System.Drawing.Size(76, 15);
-            this.TimerLabel.TabIndex = 17;
-            this.TimerLabel.Text = "TimerLabel";
-            // 
             // PlayDataButton
             // 
-            this.PlayDataButton.Location = new System.Drawing.Point(893, 261);
+            this.PlayDataButton.Location = new System.Drawing.Point(1089, 260);
             this.PlayDataButton.Name = "PlayDataButton";
             this.PlayDataButton.Size = new System.Drawing.Size(281, 34);
             this.PlayDataButton.TabIndex = 18;
@@ -273,14 +221,41 @@
             this.TestButton.UseVisualStyleBackColor = true;
             this.TestButton.Click += new System.EventHandler(this.TestButton_Click);
             // 
+            // PreAnswerEhuda
+            // 
+            this.PreAnswerEhuda.AllowUserToAddRows = false;
+            this.PreAnswerEhuda.AllowUserToDeleteRows = false;
+            this.PreAnswerEhuda.AllowUserToResizeColumns = false;
+            this.PreAnswerEhuda.AllowUserToResizeRows = false;
+            this.PreAnswerEhuda.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.PreAnswerEhuda.Location = new System.Drawing.Point(12, 353);
+            this.PreAnswerEhuda.Name = "PreAnswerEhuda";
+            this.PreAnswerEhuda.ReadOnly = true;
+            this.PreAnswerEhuda.RowHeadersWidth = 51;
+            this.PreAnswerEhuda.RowTemplate.Height = 24;
+            this.PreAnswerEhuda.Size = new System.Drawing.Size(571, 334);
+            this.PreAnswerEhuda.TabIndex = 20;
+            // 
+            // RemainingTimeLabel
+            // 
+            this.RemainingTimeLabel.AutoSize = true;
+            this.RemainingTimeLabel.Font = new System.Drawing.Font("MS UI Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.RemainingTimeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+            this.RemainingTimeLabel.Location = new System.Drawing.Point(299, 102);
+            this.RemainingTimeLabel.Name = "RemainingTimeLabel";
+            this.RemainingTimeLabel.Size = new System.Drawing.Size(213, 24);
+            this.RemainingTimeLabel.TabIndex = 21;
+            this.RemainingTimeLabel.Text = "RemainingTimeLabel";
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1382, 753);
+            this.Controls.Add(this.RemainingTimeLabel);
+            this.Controls.Add(this.PreAnswerEhuda);
             this.Controls.Add(this.TestButton);
             this.Controls.Add(this.PlayDataButton);
-            this.Controls.Add(this.TimerLabel);
             this.Controls.Add(this.FlattenCorrelateButton);
             this.Controls.Add(this.CorrelateButton);
             this.Controls.Add(this.SoundSeparateButton);
@@ -290,11 +265,7 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.NumChunkNumericBox);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.PreAnswerEhuda);
             this.Controls.Add(this.AnswerButton);
-            this.Controls.Add(this.PostAnswerEhuda);
             this.Controls.Add(this.ConfigButton);
             this.Controls.Add(this.ProblemInfoButton);
             this.Controls.Add(this.MatchInfoButton);
@@ -302,12 +273,11 @@
             this.Text = "都立(品川)";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.PostAnswerEhuda)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.PreAnswerEhuda)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.NumChunkNumericBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ChunkDataGridView)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PreAnswerEhuda)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -318,11 +288,7 @@
         private System.Windows.Forms.Button MatchInfoButton;
         private System.Windows.Forms.Button ProblemInfoButton;
         private System.Windows.Forms.Button ConfigButton;
-        private System.Windows.Forms.DataGridView PostAnswerEhuda;
         private System.Windows.Forms.Button AnswerButton;
-        private System.Windows.Forms.DataGridView PreAnswerEhuda;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.NumericUpDown NumChunkNumericBox;
         private System.Windows.Forms.Label label3;
@@ -334,9 +300,10 @@
         private System.Windows.Forms.Button FlattenCorrelateButton;
         private System.Windows.Forms.Label ProblemInfoLabel;
         private System.Windows.Forms.Label MatchInfoLabel;
-        private System.Windows.Forms.Label TimerLabel;
         private System.Windows.Forms.Button PlayDataButton;
         private System.Windows.Forms.Button TestButton;
+        private System.Windows.Forms.DataGridView PreAnswerEhuda;
+        private System.Windows.Forms.Label RemainingTimeLabel;
     }
 }
 

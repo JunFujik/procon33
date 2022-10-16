@@ -30,12 +30,32 @@ namespace procon33_gui.Forms
             InitializeComponent();
 
             DataTable ehuda =   new DataTable();
-            ehuda.Columns.Add("絵札の番号");
-            for (int i = 1; i <= 44; i++)
+            for(int i = 0; i < 10; i++)
             {
-                ehuda.Rows.Add(i.ToString("d02"));
+                ehuda.Columns.Add("");
+
+            }
+
+            for (int i = 0; i <= 4; i++)
+            {
+                var ehudaIds = new List<string>();
+                for(int j = 1; j <= 10; j++)
+                {
+                    int id = i * 10 + j;
+                    ehudaIds.Add(id.ToString("d02"));
+
+                    if (id == 44)
+                        break;
+                }
+                ehuda.Rows.Add(ehudaIds.ToArray());
             }
             PreAnswerEhuda.DataSource = ehuda;
+            PreAnswerEhuda.RowHeadersVisible = false;
+            PreAnswerEhuda.ColumnHeadersVisible = false;
+            foreach(DataGridViewColumn column in PreAnswerEhuda.Columns)
+            {
+                column.Width = 40;
+            }
 
             m_timer = new Timer()
             {
@@ -43,8 +63,11 @@ namespace procon33_gui.Forms
             };
             m_timer.Tick += (o, e) =>
             {
-                TimerLabel.Text = DateTime.Now.ToString();
-
+                if (m_problem != null)
+                {
+                    var remainingTime = (int)(m_problem.EndTime - DateTime.Now).TotalSeconds;
+                    RemainingTimeLabel.Text = $"残り{remainingTime}秒";
+                }
                 foreach(var isolQueue in m_isolationQueue)
                 {
                     if (!isolQueue.IsCompleted)
@@ -78,6 +101,8 @@ namespace procon33_gui.Forms
             }
 
             SetMatchInfo(matchInfo);
+
+            ProblemInfoButton.PerformClick();
         }
 
         private void SetMatchInfo(MatchInfo matchInfo)
@@ -85,7 +110,9 @@ namespace procon33_gui.Forms
             StringBuilder labelText = new StringBuilder();
             labelText.AppendLine($"問題数: {matchInfo.NumProblems}");
             labelText.AppendFormat("ボーナス係数: {0} {1}", string.Join(", ", matchInfo.BonusFactor.Select(x => x.ToString()).ToArray()), Environment.NewLine);
-            labelText.AppendLine($"変更札・お手付き札の減点: {matchInfo.Penalty}");
+            labelText.AppendLine($"正解札　得点: {matchInfo.CorrectPoint}");
+            labelText.AppendLine($"お手付き　減点: {matchInfo.WrongPenalty}");
+            labelText.AppendLine($"変更札　減点: {matchInfo.ChangePenalty}");
             MatchInfoLabel.Text = labelText.ToString();
 
             m_match = matchInfo;
@@ -136,6 +163,14 @@ namespace procon33_gui.Forms
             List<string> selectedEhuda = PreAnswerEhuda.SelectedCells
                 .OfType<DataGridViewTextBoxCell>()
                 .Select(x => (string)x.Value)
+                .Select(x =>
+                {
+                    if (x.Length == 4)
+                    {
+                        x = x.Substring(1, 2);
+                    }
+                    return x;
+                })
                 .OrderBy(x => int.Parse(x))
                 .ToList();
             selectedEhuda.Sort();
@@ -166,6 +201,17 @@ namespace procon33_gui.Forms
             acceptedMessage.AppendLine($"問題ID: {m_problem.ProblemId}");
             acceptedMessage.AppendLine($"絵札: {string.Join(" ", answerInfo.Answers)}");
             MessageBox.Show(acceptedMessage.ToString());
+
+            var selectedCells = PreAnswerEhuda.SelectedCells
+               .OfType<DataGridViewTextBoxCell>()
+               .ToArray();
+            foreach (DataGridViewTextBoxCell cell in selectedCells)
+            {
+                if (((string)cell.Value).Length == 2)
+                {
+                    cell.Value = "[" + cell.Value + "]";
+                }
+            }
         }
 
         private void GetChunkButton_Click(object sender, EventArgs e)
@@ -195,11 +241,32 @@ namespace procon33_gui.Forms
             if(result != ProconError.Success)
             {
                 MessageBox.Show($"分割データを取得できませんでした　エラー: {result}");
+                return;
             }
 
             foreach(var chunkPath in chunkPaths)
             {
                 AddChunkData(chunkPath);
+            }
+
+            string scriptPath = Path.Combine(m_config.ScriptsPath, "chain_wave.py");
+            Process correlateProcess = new Process()
+            {
+                StartInfo =
+                    {
+                        FileName = "py",
+                        Arguments = scriptPath,
+                        UseShellExecute = false,
+                        WorkingDirectory = ".\\data",
+                        RedirectStandardOutput = true,
+                    }
+            };
+            correlateProcess.Start();
+
+            var files = correlateProcess.StandardOutput.ReadToEnd().Split(',');
+            foreach(var file in files)
+            {
+                AddChunkData(file);
             }
         }
 

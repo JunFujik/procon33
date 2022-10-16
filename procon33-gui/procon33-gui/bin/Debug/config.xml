@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<Config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <ProconHost>172.28.1.1</ProconHost>
-  <ScriptsPath>C:\Users\kazutosh\Documents\proken\procon33\procon33_git\scripts</ScriptsPath>
-  <ProconToken>f5edbd35170e64dd9e6be9a6003153f475d82b539f6a7bd15cdc9e6bfd0b4780</ProconToken>
-  <PythonCommand>py</PythonCommand>
-  <PythonArgument />
-  <JkspeechPath>C:\Users\kazutosh\Documents\proken\procon33\procon33_git\JKspeech</JkspeechPath>
-</Config>

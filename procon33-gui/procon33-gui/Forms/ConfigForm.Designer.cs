@@ -41,6 +41,7 @@
             this.PythonArgumentTextBox = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.JkspeechPathTextBox = new System.Windows.Forms.TextBox();
+            this.UseHttpsCheckBox = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // SystemURLTextBox
@@ -162,11 +163,23 @@
             this.JkspeechPathTextBox.Size = new System.Drawing.Size(444, 22);
             this.JkspeechPathTextBox.TabIndex = 12;
             // 
+            // UseHttpsCheckBox
+            // 
+            this.UseHttpsCheckBox.AutoSize = true;
+            this.UseHttpsCheckBox.Font = new System.Drawing.Font("MS UI Gothic", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+            this.UseHttpsCheckBox.Location = new System.Drawing.Point(20, 341);
+            this.UseHttpsCheckBox.Name = "UseHttpsCheckBox";
+            this.UseHttpsCheckBox.Size = new System.Drawing.Size(208, 28);
+            this.UseHttpsCheckBox.TabIndex = 14;
+            this.UseHttpsCheckBox.Text = "HTTPSを使用する";
+            this.UseHttpsCheckBox.UseVisualStyleBackColor = true;
+            // 
             // ConfigForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(731, 587);
+            this.Controls.Add(this.UseHttpsCheckBox);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.JkspeechPathTextBox);
             this.Controls.Add(this.label5);
@@ -202,5 +215,6 @@
         private System.Windows.Forms.TextBox PythonArgumentTextBox;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.TextBox JkspeechPathTextBox;
+        private System.Windows.Forms.CheckBox UseHttpsCheckBox;
     }
 }

@@ -25,6 +25,7 @@ namespace procon33_gui.Forms
             PythonCommandTextBox.Text = config.PythonCommand;
             PythonArgumentTextBox.Text = config.PythonArgument;
             JkspeechPathTextBox.Text = config.JkspeechPath;
+            UseHttpsCheckBox.Checked = config.UseHttps;
         }
 
         public void SaveConfig(ref Config config)
@@ -35,6 +36,7 @@ namespace procon33_gui.Forms
             config.PythonCommand = PythonCommandTextBox.Text;
             config.PythonArgument = PythonArgumentTextBox.Text;
             config.JkspeechPath = JkspeechPathTextBox.Text;
+            config.UseHttps = UseHttpsCheckBox.Checked;
         }
 
         private void CloseButton_Click(object sender, EventArgs e)

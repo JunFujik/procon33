@@ -64,13 +64,23 @@ namespace procon33_gui.Procon
                 return ResultToError(result);
             }
 
-            int problems = int.Parse(response["problems"]);
-            decimal[] bonus_factor = ParseArray<decimal>(response["bonus_factor"]);
-            decimal changePenalty = decimal.Parse(response["change_penalty"]);
-            decimal wrongPenalty = decimal.Parse(response["wrong_penalty"]);
-            decimal correctPenalty = decimal.Parse(response["correct_point"]);
-
-            outMatchInfo =  new MatchInfo(problems, bonus_factor, changePenalty, wrongPenalty, correctPenalty);
+            if (response.ContainsKey("correct_point"))
+            {
+                int problems = int.Parse(response["problems"]);
+                decimal[] bonus_factor = ParseArray<decimal>(response["bonus_factor"]);
+                decimal changePenalty = decimal.Parse(response["change_penalty"]);
+                decimal wrongPenalty = decimal.Parse(response["wrong_penalty"]);
+                decimal correctPenalty = decimal.Parse(response["correct_point"]);
+                outMatchInfo = new MatchInfo(problems, bonus_factor, changePenalty, wrongPenalty, correctPenalty);
+            }
+            else
+            {
+                int problems = int.Parse(response["problems"]);
+                decimal[] bonus_factor = ParseArray<decimal>(response["bonus_factor"]);
+                decimal penalty = decimal.Parse(response["penalty"]);
+                outMatchInfo = new MatchInfo(problems, bonus_factor, penalty, penalty, penalty);
+            }
+            
             return ProconError.Success;
         }
 
@@ -99,12 +109,24 @@ namespace procon33_gui.Procon
                 return ResultToError(result);
             }
 
-            outProblemInfo = new ProblemInfo(
-                response["id"],
-                int.Parse(response["chunks"]),
-                DateTimeOffset.FromUnixTimeSeconds(long.Parse(response["start_at"])).LocalDateTime,
-                int.Parse(response["time_limit"]),
-                int.Parse(response["data"]));
+            if (response.ContainsKey("start_at"))
+            {
+                outProblemInfo = new ProblemInfo(
+                    response["id"],
+                    int.Parse(response["chunks"]),
+                    DateTimeOffset.FromUnixTimeSeconds(long.Parse(response["start_at"])).LocalDateTime,
+                    int.Parse(response["time_limit"]),
+                    int.Parse(response["data"]));
+            }
+            else
+            {
+                outProblemInfo = new ProblemInfo(
+                    response["id"],
+                    int.Parse(response["chunks"]),
+                    DateTimeOffset.FromUnixTimeSeconds(long.Parse(response["starts_at"])).LocalDateTime,
+                    int.Parse(response["time_limit"]),
+                    int.Parse(response["data"]));
+            }
             return ProconError.Success;
         }
 

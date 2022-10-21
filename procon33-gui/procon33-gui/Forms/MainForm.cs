@@ -411,6 +411,11 @@ namespace procon33_gui.Forms
                 return;
             }
 
+            if(selectedChunks.Count == 0)
+            {
+                return;
+            }
+
             SoundPlayer player = new SoundPlayer(selectedChunks.First());
             player.Play();
         }
